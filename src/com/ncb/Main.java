@@ -1,12 +1,12 @@
 package com.ncb;
 
-import java.math.BigInteger;
+import com.ncb.DataStructures.*;
 
 public class Main {
 
     public static void main(String[] args) {
-        Node r = DataStructures.getTree();
-        DataStructures.LevelOrder(r);
+        Node r = Trees.getBSTree();
+        Trees.lca(r, 1, 7);
     }
 
 

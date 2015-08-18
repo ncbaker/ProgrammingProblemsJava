@@ -1,11 +1,11 @@
-package com.ncb;
+package com.ncb.Algorithms;
 
 import java.math.BigInteger;
 
 /**
  * Created by nathanb on 8/18/2015.
  */
-public class Algorithms {
+public class Warmup {
     /* https://www.hackerrank.com/challenges/extra-long-factorials */
     static void factProblem() {
         short num = new java.util.Scanner(System.in).nextShort();
