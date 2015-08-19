@@ -5,8 +5,8 @@ import com.ncb.DataStructures.*;
 public class Main {
 
     public static void main(String[] args) {
-        Node r = Trees.getBSTree();
-        Trees.lca(r, 1, 7);
+        //Node r = Trees.getSwapTree1();
+        Trees.swapAlgo();
     }
 
 
