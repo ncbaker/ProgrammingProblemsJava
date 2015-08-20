@@ -26,76 +26,23 @@ import java.util.Stack;
 
 
 public class Trees {
-    public static Node getTree()
-    {
-        Node rL = new Node(5, new Node(1), new Node(4));
-        Node rR = new Node(2, new Node(6), null);
-        return new Node(3, rL, rR);
-    }
-    public static Node getBSTree()
-    {
-        Node rL = new Node(2, new Node(1), new Node(3));
-        Node rR = new Node(7);
-        return new Node(4, rL, rR);
-    }
-    public static Node getSwapTree1()
-    {
-        Node rL = new Node(2, new Node(-1), new Node(-1));
-        Node rR = new Node(3, new Node(-1), new Node(-1));
-        return new Node(1, rL, rR);
-    }
-    public static Node getSwapTree2()
-    {
-        Node rL = new Node(2, new Node(-1), new Node(4));
-        Node rR = new Node(3, new Node(-1), new Node(5));
-        return new Node(1, rL, rR);
-    }
-    public static Node getSwapTree3()
-    {
-        Node rLLL = new Node(6, new Node(-1), new Node(9));
-        Node rLL = new Node(4, rLLL, new Node(-1));
-        Node rL = new Node(2, rLL, new Node(-1));
-
-        Node rRLR = new Node(8, new Node(10), new Node(11));
-        Node rRL = new Node(5, new Node(7), rRLR);
-        Node rR = new Node(3, rRL, new Node(-1));
-
-        return new Node(1, rL, rR);
-    }
-
-
-
-/*
-    11
-    2 3
-    4 -1
-    5 -1
-    6 -1
-    7 8
-    -1 9
-    -1 -1
-    10 11
-    -1 -1
-    -1 -1
-    -1 -1
-    2
-    2
-    4
-*/
-
-
-/*
-    3 height
-    2 3
-    -1 -1
-    -1 -1
-    2 swap
-    1
-    1*/
-    /*https://www.hackerrank.com/challenges/swap-nodes-algo*/
+    /*https://www.hackerrank.com/challenges/swap-nodes-algo
+     * forced to run from main so a refernce to Main was added to reference the inner class node
+     * Main sln = new Main();
+     * new Node() below would need to be replaced with sln.new Node(); in hacker rank solution
+     * Node class was added as a private inner class
+     *     private class Node {
+                int data;
+                Node left;
+                Node right;
+            }
+     * this algorithm is a bit memory heavy in that it has the overhead of the ArrayList<ArrayList<Node>>
+     * maybe it could be improved */
     public static void swapAlgo()
     {
-        short nodeCount = new java.util.Scanner(System.in).nextShort();
+        //Main sln = new Main();
+        java.util.Scanner scan = new java.util.Scanner(System.in);
+        short nodeCount = scan.nextShort();
 
         Node root = new Node();
         root.data = 1;
@@ -111,8 +58,6 @@ public class Trees {
         ArrayList<Node> rootLevel = new ArrayList<Node>();
         rootLevel.add(root);
         nodesByLevel.add(rootLevel);
-
-        java.util.Scanner scan = new java.util.Scanner(System.in);
 
         Node temp;
         while(currCount <= nodeCount)
@@ -148,20 +93,25 @@ public class Trees {
             nodesByLevel.add(lvl);
         }
 
-        short swapCount = new java.util.Scanner(System.in).nextShort();
-        int height;
+
+        short swapCount = scan.nextShort();
+        short[] height = new short[swapCount];
+        for (int i = 0; i < swapCount; i++)
+            height[i] = scan.nextShort();
 
         Node tempFlip;
         for (int i = 0; i < swapCount; i++) {
-            height = new java.util.Scanner(System.in).nextShort();
-            for (int j = 0; j < nodesByLevel.get(height-1).size(); j++) {
-                temp = nodesByLevel.get(height-1).get(j);
-                tempFlip = temp.right;
-                temp.right = temp.left;
-                temp.left = tempFlip;
+            for (int j = height[i]; j < nodesByLevel.size(); j=j+height[i]) {
+                for (int k= 0; k < nodesByLevel.get(j - 1).size(); k++) {
+                    temp = nodesByLevel.get(j - 1).get(k);
+                    tempFlip = temp.right;
+                    temp.right = temp.left;
+                    temp.left = tempFlip;
+                }
             }
 
             InorderPositive(root);
+            System.out.println();
         }
     }
     static void InorderPositive(Node root) {
@@ -348,7 +298,6 @@ public class Trees {
     }
 
 
-
     /* https://www.hackerrank.com/challenges/tree-postorder-traversal  */
     static void Postorder(Node root) {
         if(root.left != null)
@@ -369,4 +318,45 @@ public class Trees {
         if(root.right != null)
             Preorder(root.right);
     }
+
+
+
+    //tree factory type methods
+    public static Node getTree()
+    {
+        Node rL = new Node(5, new Node(1), new Node(4));
+        Node rR = new Node(2, new Node(6), null);
+        return new Node(3, rL, rR);
+    }
+    public static Node getBSTree()
+    {
+        Node rL = new Node(2, new Node(1), new Node(3));
+        Node rR = new Node(7);
+        return new Node(4, rL, rR);
+    }
+    public static Node getSwapTree1()
+    {
+        Node rL = new Node(2, new Node(-1), new Node(-1));
+        Node rR = new Node(3, new Node(-1), new Node(-1));
+        return new Node(1, rL, rR);
+    }
+    public static Node getSwapTree2()
+    {
+        Node rL = new Node(2, new Node(-1), new Node(4));
+        Node rR = new Node(3, new Node(-1), new Node(5));
+        return new Node(1, rL, rR);
+    }
+    public static Node getSwapTree3()
+    {
+        Node rLLL = new Node(6, new Node(-1), new Node(9));
+        Node rLL = new Node(4, rLLL, new Node(-1));
+        Node rL = new Node(2, rLL, new Node(-1));
+
+        Node rRLR = new Node(8, new Node(10), new Node(11));
+        Node rRL = new Node(5, new Node(7), rRLR);
+        Node rR = new Node(3, rRL, new Node(-1));
+
+        return new Node(1, rL, rR);
+    }
+
 }
