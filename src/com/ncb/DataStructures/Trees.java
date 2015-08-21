@@ -1,9 +1,7 @@
 package com.ncb.DataStructures;
 
-import java.lang.reflect.Array;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Stack;
 
 /**
@@ -44,29 +42,29 @@ public class Trees {
         java.util.Scanner scan = new java.util.Scanner(System.in);
         short nodeCount = scan.nextShort();
 
-        Node root = new Node();
+        NodeTree root = new NodeTree();
         root.data = 1;
 
         int currCount = 1;
 
-        ArrayDeque<Node> previousLevel = new ArrayDeque<Node>();
+        ArrayDeque<NodeTree> previousLevel = new ArrayDeque<NodeTree>();
         previousLevel.add(root);
 
-        ArrayDeque<Node> currentLevel = new ArrayDeque<Node>();
+        ArrayDeque<NodeTree> currentLevel = new ArrayDeque<NodeTree>();
 
-        ArrayList<ArrayList<Node>> nodesByLevel = new ArrayList<ArrayList<Node>>();
-        ArrayList<Node> rootLevel = new ArrayList<Node>();
+        ArrayList<ArrayList<NodeTree>> nodesByLevel = new ArrayList<ArrayList<NodeTree>>();
+        ArrayList<NodeTree> rootLevel = new ArrayList<NodeTree>();
         rootLevel.add(root);
         nodesByLevel.add(rootLevel);
 
-        Node temp;
+        NodeTree temp;
         while(currCount <= nodeCount)
         {
-            ArrayList<Node> lvl = new ArrayList<Node>();
+            ArrayList<NodeTree> lvl = new ArrayList<NodeTree>();
             while(!previousLevel.isEmpty()) {
                 temp = previousLevel.pop();
 
-                Node left = new Node();
+                NodeTree left = new NodeTree();
                 left.data = scan.nextShort();
                 temp.left = left;
                 if(left.data != -1) {
@@ -75,7 +73,7 @@ public class Trees {
                     currCount++;
                 }
 
-                Node right = new Node();
+                NodeTree right = new NodeTree();
                 right.data = scan.nextShort();
                 temp.right = right;
                 if(right.data != -1) {
@@ -89,7 +87,7 @@ public class Trees {
                 break;
 
             previousLevel = currentLevel;
-            currentLevel = new ArrayDeque<Node>();
+            currentLevel = new ArrayDeque<NodeTree>();
             nodesByLevel.add(lvl);
         }
 
@@ -99,7 +97,7 @@ public class Trees {
         for (int i = 0; i < swapCount; i++)
             height[i] = scan.nextShort();
 
-        Node tempFlip;
+        NodeTree tempFlip;
         for (int i = 0; i < swapCount; i++) {
             for (int j = height[i]; j < nodesByLevel.size(); j=j+height[i]) {
                 for (int k= 0; k < nodesByLevel.get(j - 1).size(); k++) {
@@ -114,7 +112,7 @@ public class Trees {
             System.out.println();
         }
     }
-    static void InorderPositive(Node root) {
+    static void InorderPositive(NodeTree root) {
         if(root.left != null && root.left.data > 0) {
             InorderPositive(root.left);
             System.out.print(root.data + " ");
@@ -128,13 +126,13 @@ public class Trees {
 
     /*https://www.hackerrank.com/challenges/binary-search-tree-lowest-common-ancestor
     * */
-    public static Node lca(Node root,int v1,int v2)
+    public static NodeTree lca(NodeTree root,int v1,int v2)
     {
         if(root == null)
-            return new Node();
+            return new NodeTree();
 
-        Stack<Node> v1Q = GetLineage(root, v1);
-        Stack<Node> v2Q = GetLineage(root, v2);
+        Stack<NodeTree> v1Q = GetLineage(root, v1);
+        Stack<NodeTree> v2Q = GetLineage(root, v2);
 
         while(v1Q.size() > v2Q.size())
             v1Q.pop();
@@ -151,14 +149,14 @@ public class Trees {
             return v1Q.peek();
         }
 
-        return new Node();
+        return new NodeTree();
     }
-    static Stack<Node> GetLineage(Node root, int value)
+    static Stack<NodeTree> GetLineage(NodeTree root, int value)
     {
-        Stack<Node> q = new Stack<Node>();
+        Stack<NodeTree> q = new Stack<NodeTree>();
         q.push(root);
 
-        Node current = root;
+        NodeTree current = root;
         while(true) {
             if(value < current.data) {
                 if(current.left == null) {
@@ -187,11 +185,11 @@ public class Trees {
 
     /*https://www.hackerrank.com/challenges/binary-search-tree-insertion
     * */
-    public static Node Insert(Node root,int value)
+    public static NodeTree Insert(NodeTree root,int value)
     {
         if(root == null)
         {
-            root = new Node();
+            root = new NodeTree();
             root.data = value;
         }
         else
@@ -199,12 +197,12 @@ public class Trees {
 
         return root;
     }
-    public static void InsertBST(Node root,int value)
+    public static void InsertBST(NodeTree root,int value)
     {
         if(value < root.data)
         {
             if(root.left == null) {
-                root.left = new Node();
+                root.left = new NodeTree();
                 root.left.data = value;
             }
             else
@@ -213,7 +211,7 @@ public class Trees {
         else if(value > root.data)
         {
             if(root.right == null) {
-                root.right = new Node();
+                root.right = new NodeTree();
                 root.right.data = value;
             } else
                 InsertBST(root.right, value);
@@ -223,11 +221,11 @@ public class Trees {
 
     /*https://www.hackerrank.com/challenges/tree-level-order-traversal
     * BFS concept  */
-    public static void LevelOrder(Node root)
+    public static void LevelOrder(NodeTree root)
     {
-        java.util.Queue<Node> nodeQ = new java.util.LinkedList<Node>();
+        java.util.Queue<NodeTree> nodeQ = new java.util.LinkedList<NodeTree>();
         nodeQ.add(root);
-        Node n;
+        NodeTree n;
 
 
         while(!nodeQ.isEmpty())
@@ -243,7 +241,7 @@ public class Trees {
 
 
     /* https://www.hackerrank.com/challenges/tree-top-view */
-    static void top_view(Node root)
+    static void top_view(NodeTree root)
     {
         if(root.left != null)
             left_view(root.left);
@@ -253,14 +251,14 @@ public class Trees {
         if(root.right != null)
             right_view(root.right);
     }
-    static void left_view(Node root)
+    static void left_view(NodeTree root)
     {
         if(root.left != null)
             left_view(root.left);
 
         System.out.print(root.data + " ");
     }
-    static void right_view(Node root)
+    static void right_view(NodeTree root)
     {
         System.out.print(root.data + " ");
         if(root.right != null)
@@ -269,7 +267,7 @@ public class Trees {
 
 
     /* https://www.hackerrank.com/challenges/tree-height-of-a-binary-tree */
-    static int height(Node root)
+    static int height(NodeTree root)
     {
         if(root.left == null && root.right == null)
             return 1;
@@ -285,7 +283,7 @@ public class Trees {
 
 
     /* https://www.hackerrank.com/challenges/tree-inorder-traversal */
-    static void Inorder(Node root) {
+    static void Inorder(NodeTree root) {
         if(root.left != null) {
             Inorder(root.left);
             System.out.print(root.data + " ");
@@ -299,7 +297,7 @@ public class Trees {
 
 
     /* https://www.hackerrank.com/challenges/tree-postorder-traversal  */
-    static void Postorder(Node root) {
+    static void Postorder(NodeTree root) {
         if(root.left != null)
             Postorder(root.left);
         if(root.right != null)
@@ -310,7 +308,7 @@ public class Trees {
 
 
     /* https://www.hackerrank.com/challenges/tree-preorder-traversal */
-    static void Preorder(Node root) {
+    static void Preorder(NodeTree root) {
         System.out.print(root.data + " ");
 
         if(root.left != null)
@@ -322,41 +320,41 @@ public class Trees {
 
 
     //tree factory type methods
-    public static Node getTree()
+    public static NodeTree getTree()
     {
-        Node rL = new Node(5, new Node(1), new Node(4));
-        Node rR = new Node(2, new Node(6), null);
-        return new Node(3, rL, rR);
+        NodeTree rL = new NodeTree(5, new NodeTree(1), new NodeTree(4));
+        NodeTree rR = new NodeTree(2, new NodeTree(6), null);
+        return new NodeTree(3, rL, rR);
     }
-    public static Node getBSTree()
+    public static NodeTree getBSTree()
     {
-        Node rL = new Node(2, new Node(1), new Node(3));
-        Node rR = new Node(7);
-        return new Node(4, rL, rR);
+        NodeTree rL = new NodeTree(2, new NodeTree(1), new NodeTree(3));
+        NodeTree rR = new NodeTree(7);
+        return new NodeTree(4, rL, rR);
     }
-    public static Node getSwapTree1()
+    public static NodeTree getSwapTree1()
     {
-        Node rL = new Node(2, new Node(-1), new Node(-1));
-        Node rR = new Node(3, new Node(-1), new Node(-1));
-        return new Node(1, rL, rR);
+        NodeTree rL = new NodeTree(2, new NodeTree(-1), new NodeTree(-1));
+        NodeTree rR = new NodeTree(3, new NodeTree(-1), new NodeTree(-1));
+        return new NodeTree(1, rL, rR);
     }
-    public static Node getSwapTree2()
+    public static NodeTree getSwapTree2()
     {
-        Node rL = new Node(2, new Node(-1), new Node(4));
-        Node rR = new Node(3, new Node(-1), new Node(5));
-        return new Node(1, rL, rR);
+        NodeTree rL = new NodeTree(2, new NodeTree(-1), new NodeTree(4));
+        NodeTree rR = new NodeTree(3, new NodeTree(-1), new NodeTree(5));
+        return new NodeTree(1, rL, rR);
     }
-    public static Node getSwapTree3()
+    public static NodeTree getSwapTree3()
     {
-        Node rLLL = new Node(6, new Node(-1), new Node(9));
-        Node rLL = new Node(4, rLLL, new Node(-1));
-        Node rL = new Node(2, rLL, new Node(-1));
+        NodeTree rLLL = new NodeTree(6, new NodeTree(-1), new NodeTree(9));
+        NodeTree rLL = new NodeTree(4, rLLL, new NodeTree(-1));
+        NodeTree rL = new NodeTree(2, rLL, new NodeTree(-1));
 
-        Node rRLR = new Node(8, new Node(10), new Node(11));
-        Node rRL = new Node(5, new Node(7), rRLR);
-        Node rR = new Node(3, rRL, new Node(-1));
+        NodeTree rRLR = new NodeTree(8, new NodeTree(10), new NodeTree(11));
+        NodeTree rRL = new NodeTree(5, new NodeTree(7), rRLR);
+        NodeTree rR = new NodeTree(3, rRL, new NodeTree(-1));
 
-        return new Node(1, rL, rR);
+        return new NodeTree(1, rL, rR);
     }
 
 }

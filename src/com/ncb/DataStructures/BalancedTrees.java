@@ -30,8 +30,8 @@ public class BalancedTrees {
             }
 
             if(bfc == -1)
-                balanceRightLeft();
-            balanceRightRight();
+                balanceRightLeft(curr);
+            balanceRightRight(curr);
         }
 
         while(bf > 1)
@@ -41,8 +41,8 @@ public class BalancedTrees {
                 continue;
 
             if(bfc == 1)
-                balanceLeftRight();
-            balanceLeftLeft();
+                balanceLeftRight(curr);
+            balanceLeftLeft(curr);
         }
 
         return root;
@@ -70,24 +70,40 @@ public class BalancedTrees {
         }
     }
 
-    static void balanceLeftRight()
+    static void balanceRightLeft(NodeBT root)
     {
-
+        NodeBT drop = root.right;
+        NodeBT raise = root.right.left;
+        drop.left = raise.right;
+        raise.right = drop;
+        root.right = raise;
     }
 
-    static void balanceLeftLeft()
+    static void balanceRightRight(NodeBT root)
     {
-
+        NodeBT drop = root;
+        NodeBT raise = root.right;
+        drop.right = raise.left;
+        raise.left = drop;
+        root = raise;
     }
 
-    static void balanceRightLeft()
+    static void balanceLeftRight(NodeBT root)
     {
-
+        NodeBT drop = root.left;
+        NodeBT raise = root.left.right;
+        drop.right = raise.left;
+        raise.left = drop;
+        root.left = raise;
     }
 
-    static void balanceRightRight()
+    static void balanceLeftLeft(NodeBT root)
     {
-
+        NodeBT drop = root;
+        NodeBT raise = root.left;
+        drop.left = raise.right;
+        raise.right = drop;
+        root = drop;
     }
 
     static int balanceFactor(NodeBT root)

@@ -3,7 +3,7 @@ package com.ncb.DataStructures;
 /**
  * Created by nathanb on 8/20/2015.
  */
-public class NodeBT {
+public class NodeBT{
     int val;   //Value
     int ht;      //Height
     NodeBT left;   //Left child
