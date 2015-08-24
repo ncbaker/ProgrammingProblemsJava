@@ -10,9 +10,9 @@ public class BalancedTrees {
     /*https://www.hackerrank.com/challenges/self-balancing-tree
     * using NodeBT, must do a find and replace to Node prior to HackerRank submission
     * all that needs to be submitted is insert() method.
-    * doInsert() & populateTest() are helpers, not needed as part of upload
+    * doInsert(), setBalanceFactors(), and populateTest() are debug helpers, not needed as part of upload
     * */
-    private static Node populateTest1()
+/*    private static Node populateTest1()
     {
         Node n5 = new Node(5, 1);
         Node n4 = new Node(4, 2, null, n5);
@@ -20,7 +20,7 @@ public class BalancedTrees {
         Node n3 = new Node(3, 3, n2, n4);
 
         return n3;
-    }
+    }*/
 
     private static void setBalanceFactors(Node n)
     {
@@ -33,20 +33,57 @@ public class BalancedTrees {
 
     public static void doInsert() {
         //Node root = populateTest1();
-        Node root = new Node();
 
+        /* problem test case */
+        /**/Node root = new Node();
         insert(root, 3);
         insert(root, 2);
         insert(root, 4);
         insert(root, 5);
-
         insert(root, 6);
-        setBalanceFactors(root);
+
+        /* null test case - null becomes root */
+        /**/Node n = insert(null, 3);
+        insert(n, 2);
+        insert(n, 4);
+        insert(n, 5);
+        insert(n, 6);
+        setBalanceFactors(n);
+
+        /* negative & zero edge case - this does not work*/
+        /**/Node neg = new Node();
+        insert(neg, 0);
+        insert(neg, -2);
+        insert(neg, -4);
+        insert(neg, -5);
+        insert(neg, -6);
+        setBalanceFactors(neg);
+
+        /* test case - balanceRightLeft() */
+        Node brl = new Node();
+        insert(brl, 3);
+        insert(brl, 6);
+        insert(brl, 4);
+        insert(brl, 5);
+        setBalanceFactors(brl);
+
+        /* test case - balanceLeftRight() */
+        Node blr = new Node();
+        insert(blr, 5);
+        insert(blr, 3);
+        insert(blr, 4);
+        insert(blr, 2);
+        setBalanceFactors(blr);
     }
 
     public static Node insert(Node root, int val) {
+        if(root == null)
+            root = new Node();
+        if(root.val == 0)//overwrites root if root = 0 could that be valid?  fixes null root parameters
+            root.val = val;
+
         insertNode(root, val);
-        setHeight(root);
+        setHeight(root);//move into insertNode?
 
         int bf = balanceFactor(root);
         Node curr = root;
@@ -69,7 +106,7 @@ public class BalancedTrees {
 
         while(bf > 1)
         {
-            int bfc = balanceFactor(root.left);
+            int bfc = balanceFactor(curr.left);
             if(bfc > 1) {
                 curr.ht--;
                 curr = curr.left;
@@ -90,14 +127,11 @@ public class BalancedTrees {
     {//root stays the same, swap right-left & right
         Node drop = new Node();
         drop.val = root.right.val;
-        if(root.right.left.right != null)
-            drop.left = root.right.left.right;
-        if(root.right.right != null)
-            drop.right = root.right.right;
+        drop.right = root.right.right != null ? root.right.right : null;
+        drop.left = root.right.left.right != null ? root.right.left.right : null;
 
         root.right.val = root.right.left.val;
-        if(root.right.left.left != null)
-            root.right.left = root.right.left.left;
+        root.right.left = root.right.left.left != null ? root.right.left.left : null;
         root.right.right = drop;
 
         setHeight(drop);
@@ -109,10 +143,8 @@ public class BalancedTrees {
     {//move right to root and drop root to left of new root
         Node drop = new Node();
         drop.val = root.val;
-        if(root.left != null)
-            drop.left = root.left;
-        if(root.right.left != null)
-            drop.right = root.right.left;
+        drop.left = root.left != null ? root.left : null;
+        drop.right = root.right.left != null ? root.right.left : null;
 
         root.val = root.right.val;
         root.left = drop;
@@ -126,14 +158,11 @@ public class BalancedTrees {
     {//root stays the same, swap left-right & left
         Node drop = new Node();
         drop.val = root.left.val;
-        if(root.left.left != null)
-            drop.left = root.left.left;
-        if(root.left.right.left != null)
-            drop.right = root.left.right.left;
+        drop.left = root.left.left != null ? root.left.left : null;
+        drop.right = root.left.right.left != null ? root.left.right.left : null;
 
         root.left.val = root.left.right.val;
-        if(root.left.right.right != null)
-            root.left.right = root.left.right.right;
+        root.left.right = root.left.right.right != null ? root.left.right.right : null;
         root.left.left = drop;
 
         setHeight(drop);
@@ -145,10 +174,8 @@ public class BalancedTrees {
     {//move left to root and drop root to right of new root
         Node drop = new Node();
         drop.val = root.val;
-        if(root.right != null)
-            drop.right = root.right;
-        if(root.left.right != null)
-            drop.left = root.left.right;
+        drop.right = root.right != null ? root.right : null;
+        drop.left = root.left.right != null ? root.left.right : null;
 
         root.val = root.left.val;
         root.right = drop;
@@ -160,7 +187,7 @@ public class BalancedTrees {
 
     static int balanceFactor(Node root)
     {
-        int left = 0, right = 0;
+        int left = -1, right = -1;
 
         if(root.left != null)
             left = root.left.ht;
@@ -173,25 +200,12 @@ public class BalancedTrees {
 
     static void insertNode(Node root, int value)
     {
-        if(root == null)
-        {
-            root = new Node();
-            root.val = value;
-            root.ht = 0;
-            return;
-        }
-        else if(root.val == 0)
-        {
-            root.val = value;
-            root.ht = 0;
-            return;
-        }
-        else if(value < root.val)
+        if(value < root.val)
         {
             if(root.left == null) {
                 root.left = new Node();
                 root.left.val = value;
-                root.left.ht = 1;
+                root.left.ht = 0;
             }
             else {
                 root.left.ht++;
@@ -203,7 +217,7 @@ public class BalancedTrees {
             if(root.right == null){
                 root.right = new Node();
                 root.right.val = value;
-                root.right.ht = 1;
+                root.right.ht = 0;
             }
             else {
                 root.right.ht++;

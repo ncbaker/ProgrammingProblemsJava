@@ -12,7 +12,7 @@ public class Node {
 
 
     //added these for easy populating
-    Node() {
+/*    Node() {
     }
 
     Node(int value, int height, Node leftNode, Node rightNode) {
@@ -25,7 +25,7 @@ public class Node {
     Node(int value, int height) {
         val = value;
         ht = height;
-    }
+    }*/
 
 
 
