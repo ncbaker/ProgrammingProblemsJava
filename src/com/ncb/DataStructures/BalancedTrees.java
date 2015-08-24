@@ -10,7 +10,7 @@ public class BalancedTrees {
     /*https://www.hackerrank.com/challenges/self-balancing-tree
     * using NodeBT, must do a find and replace to Node prior to HackerRank submission
     * all that needs to be submitted is insert() method.
-    * doInsert(), setBalanceFactors(), and populateTest() are debug helpers, not needed as part of upload
+    * Inorder(), setBalanceFactors(), testTree(), doInsert(), and populateTest() are debug helpers, not needed as part of upload
     * */
 /*    private static Node populateTest1()
     {
@@ -21,6 +21,17 @@ public class BalancedTrees {
 
         return n3;
     }*/
+    static void Inorder(Node root, StringBuilder sb) {
+        if(root.left != null) {
+            Inorder(root.left, sb);
+            sb.append(root.val + " ");
+        }
+        else
+            sb.append(root.val + " ");
+
+        if(root.right != null)
+            Inorder(root.right, sb);
+    }
 
     private static void setBalanceFactors(Node n)
     {
@@ -29,6 +40,13 @@ public class BalancedTrees {
             setBalanceFactors(n.left);
         if(n.right != null)
             setBalanceFactors(n.right);
+    }
+
+    private static void testTree(Node node, String inorderResult, String exceptionMsg)
+    {
+        StringBuilder sb = new StringBuilder();
+        Inorder(node, sb);
+        if(!sb.toString().trim().equals(inorderResult)) { throw new IllegalArgumentException(exceptionMsg); }
     }
 
     public static void doInsert() {
@@ -41,6 +59,7 @@ public class BalancedTrees {
         insert(root, 4);
         insert(root, 5);
         insert(root, 6);
+        testTree(root, "2 3 4 5 6", "Fails problem case");
 
         /* null test case - null becomes root */
         /**/Node n = insert(null, 3);
@@ -49,15 +68,17 @@ public class BalancedTrees {
         insert(n, 5);
         insert(n, 6);
         setBalanceFactors(n);
+        testTree(n, "2 3 4 5 6", "Fails null case");
 
         /* negative & zero edge case - this does not work*/
         /**/Node neg = new Node();
+        insert(neg, -3);
         insert(neg, 0);
-        insert(neg, -2);
         insert(neg, -4);
         insert(neg, -5);
         insert(neg, -6);
         setBalanceFactors(neg);
+        testTree(neg, "-6 -5 -4 -3 0", "Fails negative & zero case");
 
         /* test case - balanceRightLeft() */
         Node brl = new Node();
@@ -66,6 +87,7 @@ public class BalancedTrees {
         insert(brl, 4);
         insert(brl, 5);
         setBalanceFactors(brl);
+        testTree(brl, "3 4 5 6", "Fails right left shift");
 
         /* test case - balanceLeftRight() */
         Node blr = new Node();
@@ -74,7 +96,80 @@ public class BalancedTrees {
         insert(blr, 4);
         insert(blr, 2);
         setBalanceFactors(blr);
+        testTree(blr, "2 3 4 5", "Fails left right shift");
+
+        /* test case - 1a) balanceLeftRight() */
+        Node aBLR = new Node();
+        insert(aBLR, 20);
+        insert(aBLR, 4);
+        insert(aBLR, 15);
+        setBalanceFactors(aBLR);
+        testTree(aBLR, "4 15 20", "Fails 1a) left right shift");
+
+        /* test case - 2a) double shift LRR & LLL */
+        Node dblShft = new Node();
+        insert(dblShft, 20);
+        insert(dblShft, 4);
+        insert(dblShft, 26);
+        insert(dblShft, 3);
+        insert(dblShft, 9);
+        insert(dblShft, 15);
+        setBalanceFactors(dblShft);
+        testTree(dblShft, "3 4 9 15 20 26", "Fails 2a) double shift LRR & LLL");
+
+        /* test case - 3a) triple shift LRRR & LLL */
+        Node triplShft = new Node();
+        insert(triplShft, 20);
+        insert(triplShft, 4);
+        insert(triplShft, 26);
+        insert(triplShft, 3);
+        insert(triplShft, 9);
+        insert(triplShft, 21);
+        insert(triplShft, 30);
+        insert(triplShft, 2);
+        insert(triplShft, 7);
+        insert(triplShft, 11);
+        insert(triplShft, 15);
+        setBalanceFactors(triplShft);
+        testTree(triplShft, "2 3 4 7 9 11 15 20 21 26 30", "3a) Fails triple shift");
+
+        /* test case - 1a) balanceLeftRight() */
+        Node aBLRb = new Node();
+        insert(aBLRb, 20);
+        insert(aBLRb, 4);
+        insert(aBLRb, 8);
+        setBalanceFactors(aBLRb);
+        testTree(aBLRb, "4 8 20", "Fails 1a) left right shift");
+
+        /* test case - 2a) double shift LRR & LLL */
+        Node dblShftb = new Node();
+        insert(dblShftb, 20);
+        insert(dblShftb, 4);
+        insert(dblShftb, 26);
+        insert(dblShftb, 3);
+        insert(dblShftb, 9);
+        insert(dblShftb, 8);
+        setBalanceFactors(dblShftb);
+        testTree(dblShftb, "3 4 8 9 20 26", "Fails 2a) double shift LRR & LLL");
+
+        /* test case - 3a) triple shift LRRR & LLL */
+        Node triplShftb = new Node();
+        insert(triplShftb, 20);
+        insert(triplShftb, 4);
+        insert(triplShftb, 26);
+        insert(triplShftb, 3);
+        insert(triplShftb, 9);
+        insert(triplShftb, 21);
+        insert(triplShftb, 30);
+        insert(triplShftb, 2);
+        insert(triplShftb, 7);
+        insert(triplShftb, 11);
+        insert(triplShftb, 8);
+        setBalanceFactors(triplShftb);
+        testTree(triplShftb, "2 3 4 7 8 9 11 20 21 26 30", "3a) Fails triple shift");
     }
+
+
 
     public static Node insert(Node root, int val) {
         if(root == null)
@@ -187,14 +282,8 @@ public class BalancedTrees {
 
     static int balanceFactor(Node root)
     {
-        int left = -1, right = -1;
-
-        if(root.left != null)
-            left = root.left.ht;
-
-        if(root.right != null)
-            right = root.right.ht;
-
+        int left = root.left != null ? root.left.ht : -1;
+        int right = root.right != null ? root.right.ht : -1;
         return left - right;
     }
 
