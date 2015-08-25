@@ -8,9 +8,9 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-        //BalancedTrees.doInsert();
+        BalancedTrees.doInsert();
 
-        LinkedList ll = new LinkedList();
-        ll.DeleteAll();
+        //LinkedList ll = new LinkedList();
+        //ll.DeleteAll();
     }
 }

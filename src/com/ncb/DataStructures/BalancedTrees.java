@@ -2,6 +2,8 @@ package com.ncb.DataStructures;
 
 import jdk.internal.org.objectweb.asm.tree.analysis.Value;
 
+import java.util.*;
+
 /**
  * Created by nathanb on 8/18/2015.
  */
@@ -53,26 +55,16 @@ public class BalancedTrees {
         //Node root = populateTest1();
 
         /* problem test case */
-        /**/Node root = new Node();
-        insert(root, 3);
-        insert(root, 2);
-        insert(root, 4);
-        insert(root, 5);
-        insert(root, 6);
-        testTree(root, "2 3 4 5 6", "Fails problem case");
-
-        /* null test case - null becomes root */
         /**/Node n = insert(null, 3);
         insert(n, 2);
         insert(n, 4);
         insert(n, 5);
         insert(n, 6);
         setBalanceFactors(n);
-        testTree(n, "2 3 4 5 6", "Fails null case");
+        testTree(n, "2 3 4 5 6", "Fails problem case");
 
         /* negative & zero edge case - this does not work*/
-        /**/Node neg = new Node();
-        insert(neg, -3);
+        /**/Node neg = insert(null, -3);
         insert(neg, 0);
         insert(neg, -4);
         insert(neg, -5);
@@ -81,8 +73,7 @@ public class BalancedTrees {
         testTree(neg, "-6 -5 -4 -3 0", "Fails negative & zero case");
 
         /* test case - balanceRightLeft() */
-        Node brl = new Node();
-        insert(brl, 3);
+        Node brl = insert(null, 3);
         insert(brl, 6);
         insert(brl, 4);
         insert(brl, 5);
@@ -90,8 +81,7 @@ public class BalancedTrees {
         testTree(brl, "3 4 5 6", "Fails right left shift");
 
         /* test case - balanceLeftRight() */
-        Node blr = new Node();
-        insert(blr, 5);
+        Node blr = insert(null, 5);
         insert(blr, 3);
         insert(blr, 4);
         insert(blr, 2);
@@ -99,16 +89,14 @@ public class BalancedTrees {
         testTree(blr, "2 3 4 5", "Fails left right shift");
 
         /* test case - 1a) balanceLeftRight() */
-        Node aBLR = new Node();
-        insert(aBLR, 20);
+        Node aBLR = insert(null, 20);
         insert(aBLR, 4);
         insert(aBLR, 15);
         setBalanceFactors(aBLR);
         testTree(aBLR, "4 15 20", "Fails 1a) left right shift");
 
         /* test case - 2a) double shift LRR & LLL */
-        Node dblShft = new Node();
-        insert(dblShft, 20);
+        Node dblShft = insert(null, 20);
         insert(dblShft, 4);
         insert(dblShft, 26);
         insert(dblShft, 3);
@@ -118,8 +106,7 @@ public class BalancedTrees {
         testTree(dblShft, "3 4 9 15 20 26", "Fails 2a) double shift LRR & LLL");
 
         /* test case - 3a) triple shift LRRR & LLL */
-        Node triplShft = new Node();
-        insert(triplShft, 20);
+        Node triplShft = insert(null, 20);
         insert(triplShft, 4);
         insert(triplShft, 26);
         insert(triplShft, 3);
@@ -134,16 +121,14 @@ public class BalancedTrees {
         testTree(triplShft, "2 3 4 7 9 11 15 20 21 26 30", "3a) Fails triple shift");
 
         /* test case - 1a) balanceLeftRight() */
-        Node aBLRb = new Node();
-        insert(aBLRb, 20);
+        Node aBLRb = insert(null, 20);
         insert(aBLRb, 4);
         insert(aBLRb, 8);
         setBalanceFactors(aBLRb);
         testTree(aBLRb, "4 8 20", "Fails 1a) left right shift");
 
         /* test case - 2a) double shift LRR & LLL */
-        Node dblShftb = new Node();
-        insert(dblShftb, 20);
+        Node dblShftb = insert(null, 20);
         insert(dblShftb, 4);
         insert(dblShftb, 26);
         insert(dblShftb, 3);
@@ -153,8 +138,7 @@ public class BalancedTrees {
         testTree(dblShftb, "3 4 8 9 20 26", "Fails 2a) double shift LRR & LLL");
 
         /* test case - 3a) triple shift LRRR & LLL */
-        Node triplShftb = new Node();
-        insert(triplShftb, 20);
+        Node triplShftb = insert(null, 20);
         insert(triplShftb, 4);
         insert(triplShftb, 26);
         insert(triplShftb, 3);
@@ -166,56 +150,172 @@ public class BalancedTrees {
         insert(triplShftb, 11);
         insert(triplShftb, 8);
         setBalanceFactors(triplShftb);
-        testTree(triplShftb, "2 3 4 7 8 9 11 20 21 26 30", "3a) Fails triple shift");
+        testTree(triplShftb, "2 3 4 7 8 9 11 20 21 26 30", "3a) Fails triple shift");/* problem test case */
+
+        /**/Node mult1 = insert(null, 3);
+        insert(mult1, 2);
+        insert(mult1, 4);
+        insert(mult1, 5);
+        insert(mult1, 6);
+        insert(mult1, 6);
+        setBalanceFactors(triplShftb);
+        testTree(mult1, "2 3 4 5 6 6", "Fails multiple entries case 1");
+
+        mult1 = insert(null, 3);
+        insert(mult1, 2);
+        insert(mult1, 4);
+        insert(mult1, 5);
+        insert(mult1, 6);
+        insert(mult1, 5);
+        setBalanceFactors(triplShftb);
+        testTree(mult1, "2 3 4 5 5 6", "Fails multiple entries case 2");
+
+        mult1 = insert(null, 3);
+        insert(mult1, 2);
+        insert(mult1, 4);
+        insert(mult1, 5);
+        insert(mult1, 6);
+        insert(mult1, 2);
+        setBalanceFactors(triplShftb);
+        testTree(mult1, "2 2 3 4 5 6", "Fails multiple entries case 3");
+
+        /* test case - 3a) triple shift LRRR & LLL */
+        triplShft = insert(null, 20);
+        insert(triplShft, 4);
+        insert(triplShft, 26);
+        insert(triplShft, 3);
+        insert(triplShft, 9);
+        insert(triplShft, 21);
+        insert(triplShft, 30);
+        insert(triplShft, 2);
+        insert(triplShft, 7);
+        insert(triplShft, 11);
+        insert(triplShft, 15);
+        insert(triplShft, 8);
+        insert(triplShft, 4);
+        setBalanceFactors(triplShft);
+        testTree(triplShft, "2 3 4 4 7 8 9 11 15 20 21 26 30", "Fails triple shift multiple values");
+
+        /* test mega upload many repeats */
+        n = insert(null, 1);
+        insert(n, 19);
+        insert(n, 16);
+        insert(n, 2);
+        insert(n, 1);
+        insert(n, 11);
+        insert(n, 6);
+        insert(n, 13);
+        insert(n, 7);
+        insert(n, 2);
+
+        insert(n, 14);
+        insert(n, 10);
+        insert(n, 7);
+        insert(n, 9);
+        insert(n, 5);
+        insert(n, 15);
+        insert(n, 8);
+        insert(n, 9);
+        insert(n, 13);
+        insert(n, 8);
+        setBalanceFactors(n);
+        testTree(n, "1 1 2 2 5 6 7 7 8 8 9 9 10 11 13 13 14 15 16 19", "Fails triple shift multiple values");
+
+        /*insert(n, 20);
+        insert(n, 2);
+        insert(n, 14);
+        insert(n, 12);
+        insert(n, 3);
+        insert(n, 6);
+        insert(n, 5);
+        insert(n, 2);
+        insert(n, 1);
+        insert(n, 15);
+
+        insert(n, 2);
+        insert(n, 2);
+        insert(n, 20);
+        insert(n, 11);
+        insert(n, 14);
+        insert(n, 8);
+        insert(n, 2);
+        insert(n, 17);
+        insert(n, 5);
+        insert(n, 16);
+
+        insert(n, 19);
+        insert(n, 15);
+        insert(n, 17);
+        insert(n, 2);
+        insert(n, 13);
+        insert(n, 3);
+        insert(n, 19);
+        insert(n, 1);
+        insert(n, 9);
+        insert(n, 9);*/
+        setBalanceFactors(n);
+
     }
 
 
 
     public static Node insert(Node root, int val) {
-        if(root == null)
+        if(root == null) {
             root = new Node();
-        if(root.val == 0)//overwrites root if root = 0 could that be valid?  fixes null root parameters
             root.val = val;
-
-        insertNode(root, val);
-        setHeight(root);//move into insertNode?
-
-        int bf = balanceFactor(root);
-        Node curr = root;
-
-        while(bf < -1)
-        {
-            int bfc = balanceFactor(curr.right);
-            if(bfc < -1) {
-                curr.ht--;
-                curr = curr.right;
-                continue;
-            }
-
-            if(bfc == 1)
-                balanceRightLeft(curr);
-            balanceRightRight(curr);
-
-            bf = balanceFactor(root);
         }
+        else {
+            Stack<Node> nodes = new Stack<Node>();
+            insertNode(root, val, nodes);
 
-        while(bf > 1)
-        {
-            int bfc = balanceFactor(curr.left);
-            if(bfc > 1) {
-                curr.ht--;
-                curr = curr.left;
-                continue;
+            Node c;
+            Boolean nodeAdded = nodes.peek().left == null || nodes.peek().right == null; //freshly added nodes can't have both
+            while (nodes.size() > 0) {
+                c = nodes.pop();
+                if (nodeAdded)
+                    setHeight(c);
+                balanceNode(c);
             }
-
-            if(bfc == -1)
-                balanceLeftRight(curr);
-            balanceLeftLeft(curr);
-
-            bf = balanceFactor(root);
         }
 
         return root;
+    }
+
+    static void balanceNode(Node root)
+    {
+        int bf = balanceFactor(root);
+        Node curr = root;
+
+        while(bf < -1 || bf > 1) {
+            if (bf < -1) {
+                bf = balanceFactor(curr.right);
+                if (bf < -1 || bf > 1) {
+                    curr.ht--;
+                    curr = curr.right;
+                    continue;
+                }
+
+                if (bf == 1)
+                    balanceRightLeft(curr);
+                balanceRightRight(curr);
+
+                bf = balanceFactor(root);
+            }
+            else if (bf > 1) {
+                bf = balanceFactor(curr.left);
+                if (bf < -1 || bf > 1) {
+                    curr.ht--;
+                    curr = curr.left;
+                    continue;
+                }
+
+                if (bf == -1)
+                    balanceLeftRight(curr);
+                balanceLeftLeft(curr);
+
+                bf = balanceFactor(root);
+            }
+        }
     }
 
     static void balanceRightLeft(Node root)
@@ -287,32 +387,34 @@ public class BalancedTrees {
         return left - right;
     }
 
-    static void insertNode(Node root, int value)
+    static void insertNode(Node root, int value, Stack<Node> nodes)
     {
+        nodes.add(root);
         if(value < root.val)
-        {
+            {
             if(root.left == null) {
                 root.left = new Node();
                 root.left.val = value;
-                root.left.ht = 0;
             }
-            else {
-                root.left.ht++;
-                insertNode(root.left, value);
-            }
+            else
+                insertNode(root.left, value, nodes);
         }
         else if(value > root.val)
         {
             if(root.right == null){
                 root.right = new Node();
                 root.right.val = value;
-                root.right.ht = 0;
             }
-            else {
-                root.right.ht++;
-                insertNode(root.right, value);
-            }
+            else
+                insertNode(root.right, value, nodes);
         }
+        else if(root.right == null) //if equal and no right node exists add to right
+        {
+            root.right = new Node();
+            root.right.val = value;
+        }
+        else if(root.right != null) //if equal add right exists run on right
+            insertNode(root.right, value, nodes);
     }
 
     static void setHeight(Node node)
@@ -321,61 +423,4 @@ public class BalancedTrees {
         int right = (node.right != null) ? node.right.ht : -1;
         node.ht = Math.max(left, right)+1;
     }
-
-
-    /*
-
-
-    static void balanceRightLeftBK(Node root)
-    {
-        Node drop = root.right;
-        Node raise = root.right.left;
-        drop.left = raise.right;
-        raise.right = drop;
-        root.right = raise;
-
-        setHeight(drop);
-        setHeight(raise);
-    }
-
-    static void balanceRightRightBK(Node root)
-    {
-        Node drop = root;
-        Node raise = root.right;
-        drop.right = raise.left;
-        raise.left = drop;
-        root = raise;
-
-        setHeight(drop);
-        setHeight(raise);
-
-        //root = raise;
-        root.val = raise.val;
-        root.ht = raise.ht;
-        root.left = raise.left;
-        root.right = raise.right;
-    }
-
-    static void decrementHeight(Node node)
-    {
-        node.ht--;
-        if(node.left != null)
-            decrementHeight(node.left);
-        if(node.right != null)
-            decrementHeight(node.right);
-    }
-
-    static void incrementHeight(Node node)
-    {//decrementHeight(node);
-        node.ht++;
-        if(node.left != null)
-            incrementHeight(node.left);
-        if(node.right != null)
-            incrementHeight(node.right);
-    }
-
-    static void setHeight(Node node)
-    {
-
-    }*/
 }
