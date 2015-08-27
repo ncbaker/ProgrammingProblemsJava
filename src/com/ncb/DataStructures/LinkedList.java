@@ -6,7 +6,14 @@ package com.ncb.DataStructures;
 public class LinkedList {
 
     /*https://www.hackerrank.com/challenges/print-the-elements-of-a-linked-list*/
-    void Print(Node head) {
+    public void PrintAll()
+    {
+        Node n = InsertTail(null, 1);
+        n = InsertTail(n, 2);
+        n = InsertTail(n, 3);
+        Print(n);
+    }
+    public void Print(Node head) {
         if(head == null)
             return;
 
@@ -49,8 +56,14 @@ public class LinkedList {
 
         return sb;
     }
+
     /*https://www.hackerrank.com/challenges/insert-a-node-at-the-tail-of-a-linked-list*/
-    Node Insert1(Node head,int data) {
+    public void InsertTailAll()
+    {
+        Node n = InsertTail(null, 2);
+        n = InsertTail(n, 3);
+    }
+    Node InsertTail(Node head,int data) {
         Node newNode = new Node();
         newNode.data = data;
 
@@ -73,7 +86,12 @@ public class LinkedList {
     }
 
     /*https://www.hackerrank.com/challenges/insert-a-node-at-the-head-of-a-linked-list/submissions/code/13241041*/
-    Node Insert2(Node head,int x) {
+    public void InsertHeadAll()
+    {
+        Node n = InsertHead(null, 1);
+        n = InsertHead(n, 2);
+    }
+    Node InsertHead(Node head,int x) {
         Node newNode = new Node();
         newNode.data = x;
 
@@ -176,6 +194,18 @@ public class LinkedList {
     }
 
     /*https://www.hackerrank.com/challenges/print-the-elements-of-a-linked-list-in-reverse/submissions/code/13329894*/
+    public void ReversePrintAll()
+    {
+        Node n = InsertTail(null, 1);
+        n = InsertTail(n, 2);
+        ReversePrint(n);
+
+        n = InsertTail(null, 2);
+        n = InsertTail(n, 1);
+        n = InsertTail(n, 4);
+        n = InsertTail(n, 5);
+        ReversePrint(n);
+    }
     void ReversePrint(Node head) {
         if(head == null)
             return;

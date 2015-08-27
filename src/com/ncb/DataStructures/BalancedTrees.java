@@ -14,42 +14,6 @@ public class BalancedTrees {
     * all that needs to be submitted is insert() method.
     * Inorder(), setBalanceFactors(), testTree(), doInsert(), and populateTest() are debug helpers, not needed as part of upload
     * */
-/*    private static Node populateTest1()
-    {
-        Node n5 = new Node(5, 1);
-        Node n4 = new Node(4, 2, null, n5);
-        Node n2 = new Node(2, 1);
-        Node n3 = new Node(3, 3, n2, n4);
-
-        return n3;
-    }*/
-    static void Inorder(Node root, StringBuilder sb) {
-        if(root.left != null) {
-            Inorder(root.left, sb);
-            sb.append(root.val + " ");
-        }
-        else
-            sb.append(root.val + " ");
-
-        if(root.right != null)
-            Inorder(root.right, sb);
-    }
-
-    private static void setBalanceFactors(Node n)
-    {
-        n.balanceFactor = balanceFactor(n);
-        if(n.left != null)
-            setBalanceFactors(n.left);
-        if(n.right != null)
-            setBalanceFactors(n.right);
-    }
-
-    private static void testTree(Node node, String inorderResult, String exceptionMsg)
-    {
-        StringBuilder sb = new StringBuilder();
-        Inorder(node, sb);
-        if(!sb.toString().trim().equals(inorderResult)) { throw new IllegalArgumentException(exceptionMsg); }
-    }
 
     public static void doInsert() {
         //Node root = populateTest1();
@@ -257,9 +221,37 @@ public class BalancedTrees {
 
     }
 
+    static void Inorder(Node root, StringBuilder sb) {
+        if(root.left != null) {
+            Inorder(root.left, sb);
+            sb.append(root.val + " ");
+        }
+        else
+            sb.append(root.val + " ");
+
+        if(root.right != null)
+            Inorder(root.right, sb);
+    }
+
+    static void setBalanceFactors(Node n)
+    {
+        n.balanceFactor = balanceFactor(n);
+        if(n.left != null)
+            setBalanceFactors(n.left);
+        if(n.right != null)
+            setBalanceFactors(n.right);
+    }
+
+    static void testTree(Node node, String inorderResult, String exceptionMsg)
+    {
+        StringBuilder sb = new StringBuilder();
+        Inorder(node, sb);
+        if(!sb.toString().trim().equals(inorderResult)) { throw new IllegalArgumentException(exceptionMsg); }
+    }
 
 
-    public static Node insert(Node root, int val) {
+    /* this method and below are required for hacker rank submission */
+    static Node insert(Node root, int val) {
         if(root == null) {
             root = new Node();
             root.val = val;

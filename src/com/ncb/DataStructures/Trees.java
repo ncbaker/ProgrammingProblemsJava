@@ -124,8 +124,7 @@ public class Trees {
             InorderPositive(root.right);
     }
 
-    /*https://www.hackerrank.com/challenges/binary-search-tree-lowest-common-ancestor
-    * */
+    /*https://www.hackerrank.com/challenges/binary-search-tree-lowest-common-ancestor */
     public static NodeTree lca(NodeTree root,int v1,int v2)
     {
         if(root == null)
@@ -183,8 +182,7 @@ public class Trees {
     }
 
 
-    /*https://www.hackerrank.com/challenges/binary-search-tree-insertion
-    * */
+    /*https://www.hackerrank.com/challenges/binary-search-tree-insertion */
     public static NodeTree Insert(NodeTree root,int value)
     {
         if(root == null)
@@ -197,7 +195,7 @@ public class Trees {
 
         return root;
     }
-    public static void InsertBST(NodeTree root,int value)
+    static void InsertBST(NodeTree root,int value)
     {
         if(value < root.data)
         {
@@ -241,7 +239,7 @@ public class Trees {
 
 
     /* https://www.hackerrank.com/challenges/tree-top-view */
-    static void top_view(NodeTree root)
+    public static void top_view(NodeTree root)
     {
         if(root.left != null)
             left_view(root.left);
@@ -267,7 +265,7 @@ public class Trees {
 
 
     /* https://www.hackerrank.com/challenges/tree-height-of-a-binary-tree */
-    static int height(NodeTree root)
+    public static int height(NodeTree root)
     {
         if(root.left == null && root.right == null)
             return 1;
@@ -283,7 +281,7 @@ public class Trees {
 
 
     /* https://www.hackerrank.com/challenges/tree-inorder-traversal */
-    static void Inorder(NodeTree root) {
+    public static void Inorder(NodeTree root) {
         if(root.left != null) {
             Inorder(root.left);
             System.out.print(root.data + " ");
@@ -297,7 +295,7 @@ public class Trees {
 
 
     /* https://www.hackerrank.com/challenges/tree-postorder-traversal  */
-    static void Postorder(NodeTree root) {
+    public static void Postorder(NodeTree root) {
         if(root.left != null)
             Postorder(root.left);
         if(root.right != null)
@@ -308,7 +306,7 @@ public class Trees {
 
 
     /* https://www.hackerrank.com/challenges/tree-preorder-traversal */
-    static void Preorder(NodeTree root) {
+    public static void Preorder(NodeTree root) {
         System.out.print(root.data + " ");
 
         if(root.left != null)
@@ -326,10 +324,33 @@ public class Trees {
         NodeTree rR = new NodeTree(2, new NodeTree(6), null);
         return new NodeTree(3, rL, rR);
     }
-    public static NodeTree getBSTree()
+    public static NodeTree getTreeHeight()
+    {
+        NodeTree rL = new NodeTree(5, new NodeTree(1), new NodeTree(4));
+        NodeTree rRL = new NodeTree(6, new NodeTree(7), null);
+        NodeTree rR = new NodeTree(2, rRL, null);
+        return new NodeTree(3, rL, rR);
+    }
+    public static NodeTree getTreeTopView()
+    {
+        NodeTree rLL = new NodeTree(1, null, new NodeTree(9));
+        NodeTree rL = new NodeTree(5, rLL, new NodeTree(4));
+
+        NodeTree rRR = new NodeTree(7, new NodeTree(8), null);
+        NodeTree rR = new NodeTree(2, new NodeTree(6), rRR);
+
+        return new NodeTree(3, rL, rR);
+    }
+    public static NodeTree getTreeBinarySearch()
     {
         NodeTree rL = new NodeTree(2, new NodeTree(1), new NodeTree(3));
         NodeTree rR = new NodeTree(7);
+        return new NodeTree(4, rL, rR);
+    }
+    public static NodeTree getTreeLCA()
+    {
+        NodeTree rL = new NodeTree(2, new NodeTree(1), new NodeTree(3));
+        NodeTree rR = new NodeTree(7, new NodeTree(6), null);
         return new NodeTree(4, rL, rR);
     }
     public static NodeTree getSwapTree1()
