@@ -9,40 +9,47 @@ public class Main {
 
     }
 
-    public static void Trees() {
-        /* ********************** */
-        /* Trees & BST Challenges */
-        /* ********************** */
+    public static void BalancedTrees() {
+        /* ************************ */
+        /* Balanced Tree Challenges */
+        /* ************************ */
 
         /*https://www.hackerrank.com/challenges/self-balancing-tree */
-        BalancedTrees.doInsert();
+        BalancedTrees balTree = new BalancedTrees();
+        balTree.doInsert();
+    }
 
+    public static void Trees() {
+        /* **************** */
+        /* Trees Challenges */
+        /* **************** */
+        Trees tree = new Trees();
         /*https://www.hackerrank.com/challenges/swap-nodes-algo */
-        Trees.swapAlgo();
+        tree.swapAlgo();
 
         /*https://www.hackerrank.com/challenges/binary-search-tree-lowest-common-ancestor*/
-        Trees.lca(Trees.getTreeLCA(),1,7);
+        tree.lca(tree.getTreeLCA(),1,7);
 
         /*https://www.hackerrank.com/challenges/binary-search-tree-insertion*/
-        Trees.Insert(Trees.getTreeBinarySearch(),6);
+        tree.Insert(tree.getTreeBinarySearch(),6);
 
         /*https://www.hackerrank.com/challenges/tree-level-order-traversal */
-        Trees.LevelOrder(Trees.getTree());
+        tree.LevelOrder(tree.getTree());
 
         /* https://www.hackerrank.com/challenges/tree-top-view */
-        Trees.top_view(Trees.getTreeTopView());
+        tree.top_view(tree.getTreeTopView());
 
         /* https://www.hackerrank.com/challenges/tree-height-of-a-binary-tree */
-        Trees.height(Trees.getTreeHeight());
+        tree.height(tree.getTreeHeight());
 
         /* https://www.hackerrank.com/challenges/tree-inorder-traversal */
-        Trees.Inorder(Trees.getTree());
+        tree.Inorder(tree.getTree());
 
         /* https://www.hackerrank.com/challenges/tree-postorder-traversal  */
-        Trees.Postorder(Trees.getTree());
+        tree.Postorder(tree.getTree());
 
         /* https://www.hackerrank.com/challenges/tree-preorder-traversal */
-        Trees.Preorder(Trees.getTree());
+        tree.Preorder(tree.getTree());
     }
 
     public static void LinkedList() {

@@ -10,14 +10,11 @@ import java.util.*;
 public class BalancedTrees {
 
     /*https://www.hackerrank.com/challenges/self-balancing-tree
-    * using NodeBT, must do a find and replace to Node prior to HackerRank submission
     * all that needs to be submitted is insert() method.
     * Inorder(), setBalanceFactors(), testTree(), doInsert(), and populateTest() are debug helpers, not needed as part of upload
     * */
 
-    public static void doInsert() {
-        //Node root = populateTest1();
-
+    public void doInsert() {
         /* problem test case */
         /**/Node n = insert(null, 3);
         insert(n, 2);
@@ -221,7 +218,7 @@ public class BalancedTrees {
 
     }
 
-    static void Inorder(Node root, StringBuilder sb) {
+    void Inorder(Node root, StringBuilder sb) {
         if(root.left != null) {
             Inorder(root.left, sb);
             sb.append(root.val + " ");
@@ -233,7 +230,7 @@ public class BalancedTrees {
             Inorder(root.right, sb);
     }
 
-    static void setBalanceFactors(Node n)
+    void setBalanceFactors(Node n)
     {
         n.balanceFactor = balanceFactor(n);
         if(n.left != null)
@@ -242,7 +239,7 @@ public class BalancedTrees {
             setBalanceFactors(n.right);
     }
 
-    static void testTree(Node node, String inorderResult, String exceptionMsg)
+    void testTree(Node node, String inorderResult, String exceptionMsg)
     {
         StringBuilder sb = new StringBuilder();
         Inorder(node, sb);
@@ -251,7 +248,7 @@ public class BalancedTrees {
 
 
     /* this method and below are required for hacker rank submission */
-    static Node insert(Node root, int val) {
+    Node insert(Node root, int val) {
         if(root == null) {
             root = new Node();
             root.val = val;
@@ -273,7 +270,7 @@ public class BalancedTrees {
         return root;
     }
 
-    static void balanceNode(Node root)
+    void balanceNode(Node root)
     {
         int bf = balanceFactor(root);
         Node curr = root;
@@ -310,7 +307,7 @@ public class BalancedTrees {
         }
     }
 
-    static void balanceRightLeft(Node root)
+    void balanceRightLeft(Node root)
     {//root stays the same, swap right-left & right
         Node drop = new Node();
         drop.val = root.right.val;
@@ -326,7 +323,7 @@ public class BalancedTrees {
         setHeight(root);
     }
 
-    static void balanceRightRight(Node root)
+    void balanceRightRight(Node root)
     {//move right to root and drop root to left of new root
         Node drop = new Node();
         drop.val = root.val;
@@ -341,7 +338,7 @@ public class BalancedTrees {
         setHeight(root);
     }
 
-    static void balanceLeftRight(Node root)
+    void balanceLeftRight(Node root)
     {//root stays the same, swap left-right & left
         Node drop = new Node();
         drop.val = root.left.val;
@@ -357,7 +354,7 @@ public class BalancedTrees {
         setHeight(root);
     }
 
-    static void balanceLeftLeft(Node root)
+    void balanceLeftLeft(Node root)
     {//move left to root and drop root to right of new root
         Node drop = new Node();
         drop.val = root.val;
@@ -372,14 +369,14 @@ public class BalancedTrees {
         setHeight(root);
     }
 
-    static int balanceFactor(Node root)
+    int balanceFactor(Node root)
     {
         int left = root.left != null ? root.left.ht : -1;
         int right = root.right != null ? root.right.ht : -1;
         return left - right;
     }
 
-    static void insertNode(Node root, int value, Stack<Node> nodes)
+    void insertNode(Node root, int value, Stack<Node> nodes)
     {
         nodes.add(root);
         if(value < root.val)
@@ -409,10 +406,18 @@ public class BalancedTrees {
             insertNode(root.right, value, nodes);
     }
 
-    static void setHeight(Node node)
+    void setHeight(Node node)
     {
         int left = (node.left != null) ? node.left.ht : -1;
         int right = (node.right != null) ? node.right.ht : -1;
         node.ht = Math.max(left, right)+1;
+    }
+
+    private class Node {
+        int val;   //Value
+        int ht;      //Height
+        Node left;   //Left child
+        Node right;   //Right child
+        int balanceFactor;
     }
 }
