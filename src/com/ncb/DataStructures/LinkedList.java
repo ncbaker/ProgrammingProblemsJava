@@ -5,6 +5,30 @@ package com.ncb.DataStructures;
  */
 public class LinkedList {
 
+    String toString(Node head) {
+        if(head == null)
+            return "";
+
+        StringBuilder sb = new StringBuilder();
+        Node current = head;
+        while(true) {
+            sb.append(current.data + " ");
+            if(current.next == null)
+                break;
+
+            current = current.next;
+        }
+
+        return sb.toString().trim();
+    }
+    void testCase(Node n, String intendedValue, String testName)
+    {
+        if(!toString(n).equals(intendedValue))
+            throw new IllegalArgumentException(testName + " error");
+        else
+            System.out.println(testName + " pass test case");
+    }
+
     /*https://www.hackerrank.com/challenges/print-the-elements-of-a-linked-list*/
     public void PrintAll()
     {
@@ -26,42 +50,14 @@ public class LinkedList {
             current = current.next;
         }
     }
-    void PrintAppend(Node head) {
-        if(head == null)
-            return;
-
-        Node current = head;
-        while(true) {
-            System.out.print(current.data);
-            if(current.next == null)
-                break;
-
-            current = current.next;
-        }
-    }
-    StringBuilder PrintBuilder(Node head, StringBuilder sb) {
-        if(sb == null)
-            sb = new StringBuilder();
-        if(head == null)
-            return sb;
-
-        Node current = head;
-        while(true) {
-            sb.append(current.data);
-            if(current.next == null)
-                break;
-
-            current = current.next;
-        }
-
-        return sb;
-    }
 
     /*https://www.hackerrank.com/challenges/insert-a-node-at-the-tail-of-a-linked-list*/
     public void InsertTailAll()
     {
         Node n = InsertTail(null, 2);
         n = InsertTail(n, 3);
+
+        testCase(n, "2 3", "Insert Tail");
     }
     Node InsertTail(Node head,int data) {
         Node newNode = new Node();
@@ -90,6 +86,8 @@ public class LinkedList {
     {
         Node n = InsertHead(null, 1);
         n = InsertHead(n, 2);
+
+        testCase(n, "2 1", "Insert Head");
     }
     Node InsertHead(Node head,int x) {
         Node newNode = new Node();
@@ -111,7 +109,9 @@ public class LinkedList {
         n = InsertNth(n, 4, 2);
         n = InsertNth(n, 2, 4);
         n = InsertNth(n, 10, 1);
-        PrintAppend(n);
+        System.out.print(toString(n));
+
+        testCase(n, "3 10 5 4 2", "InsertNth");
     }
     Node InsertNth(Node head, int data, int position) {
         Node newNode = new Node();
@@ -145,22 +145,19 @@ public class LinkedList {
         n = InsertNth(n, 2, 1);
         n = InsertNth(n, 3, 2);
         n = Delete(n, 0);
-        if(!PrintBuilder(n, null).toString().equals("23"))
-            throw new IllegalArgumentException("Delete 0 failed");
+        testCase(n, "2 3", "Delete Case 0");
 
         n = InsertNth(null, 1, 0);
         n = InsertNth(n, 2, 1);
         n = InsertNth(n, 3, 2);
         n = Delete(n, 1);
-        if(!PrintBuilder(n, null).toString().equals("13"))
-            throw new IllegalArgumentException("Delete 0 failed");
+        testCase(n, "1 3", "Delete Case 1");
 
         n = InsertNth(null, 1, 0);
         n = InsertNth(n, 2, 1);
         n = InsertNth(n, 3, 2);
         n = Delete(n, 2);
-        if(!PrintBuilder(n, null).toString().equals("12"))
-            throw new IllegalArgumentException("Delete 0 failed");
+        testCase(n, "1 2", "Delete Case 2");
 
         n = InsertNth(null, 4, 0);
         n = InsertNth(n, 3, 1);
@@ -168,8 +165,7 @@ public class LinkedList {
         n = InsertNth(n, 5, 3);
         n = InsertNth(n, 1, 4);
         n = Delete(n, 2);
-        if(!PrintBuilder(n, null).toString().equals("4351"))
-            throw new IllegalArgumentException("Delete 0 failed");
+        testCase(n, "4 3 5 1", "Delete Case 3");
     }
     Node Delete(Node head, int position) {
         if(position == 0)

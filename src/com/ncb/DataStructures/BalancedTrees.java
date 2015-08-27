@@ -22,7 +22,7 @@ public class BalancedTrees {
         insert(n, 5);
         insert(n, 6);
         setBalanceFactors(n);
-        testTree(n, "2 3 4 5 6", "Fails problem case");
+        testTree(n, "2 3 4 5 6", "Problem case");
 
         /* negative & zero edge case - this does not work*/
         /**/Node neg = insert(null, -3);
@@ -31,7 +31,7 @@ public class BalancedTrees {
         insert(neg, -5);
         insert(neg, -6);
         setBalanceFactors(neg);
-        testTree(neg, "-6 -5 -4 -3 0", "Fails negative & zero case");
+        testTree(neg, "-6 -5 -4 -3 0", "Negative & zero case");
 
         /* test case - balanceRightLeft() */
         Node brl = insert(null, 3);
@@ -39,7 +39,7 @@ public class BalancedTrees {
         insert(brl, 4);
         insert(brl, 5);
         setBalanceFactors(brl);
-        testTree(brl, "3 4 5 6", "Fails right left shift");
+        testTree(brl, "3 4 5 6", "Right Left shift");
 
         /* test case - balanceLeftRight() */
         Node blr = insert(null, 5);
@@ -47,14 +47,14 @@ public class BalancedTrees {
         insert(blr, 4);
         insert(blr, 2);
         setBalanceFactors(blr);
-        testTree(blr, "2 3 4 5", "Fails left right shift");
+        testTree(blr, "2 3 4 5", "Left Right shift");
 
         /* test case - 1a) balanceLeftRight() */
         Node aBLR = insert(null, 20);
         insert(aBLR, 4);
         insert(aBLR, 15);
         setBalanceFactors(aBLR);
-        testTree(aBLR, "4 15 20", "Fails 1a) left right shift");
+        testTree(aBLR, "4 15 20", "1a) Left Right shift");
 
         /* test case - 2a) double shift LRR & LLL */
         Node dblShft = insert(null, 20);
@@ -64,7 +64,7 @@ public class BalancedTrees {
         insert(dblShft, 9);
         insert(dblShft, 15);
         setBalanceFactors(dblShft);
-        testTree(dblShft, "3 4 9 15 20 26", "Fails 2a) double shift LRR & LLL");
+        testTree(dblShft, "3 4 9 15 20 26", "2a) Double shift LRR & LLL");
 
         /* test case - 3a) triple shift LRRR & LLL */
         Node triplShft = insert(null, 20);
@@ -79,39 +79,7 @@ public class BalancedTrees {
         insert(triplShft, 11);
         insert(triplShft, 15);
         setBalanceFactors(triplShft);
-        testTree(triplShft, "2 3 4 7 9 11 15 20 21 26 30", "3a) Fails triple shift");
-
-        /* test case - 1a) balanceLeftRight() */
-        Node aBLRb = insert(null, 20);
-        insert(aBLRb, 4);
-        insert(aBLRb, 8);
-        setBalanceFactors(aBLRb);
-        testTree(aBLRb, "4 8 20", "Fails 1a) left right shift");
-
-        /* test case - 2a) double shift LRR & LLL */
-        Node dblShftb = insert(null, 20);
-        insert(dblShftb, 4);
-        insert(dblShftb, 26);
-        insert(dblShftb, 3);
-        insert(dblShftb, 9);
-        insert(dblShftb, 8);
-        setBalanceFactors(dblShftb);
-        testTree(dblShftb, "3 4 8 9 20 26", "Fails 2a) double shift LRR & LLL");
-
-        /* test case - 3a) triple shift LRRR & LLL */
-        Node triplShftb = insert(null, 20);
-        insert(triplShftb, 4);
-        insert(triplShftb, 26);
-        insert(triplShftb, 3);
-        insert(triplShftb, 9);
-        insert(triplShftb, 21);
-        insert(triplShftb, 30);
-        insert(triplShftb, 2);
-        insert(triplShftb, 7);
-        insert(triplShftb, 11);
-        insert(triplShftb, 8);
-        setBalanceFactors(triplShftb);
-        testTree(triplShftb, "2 3 4 7 8 9 11 20 21 26 30", "3a) Fails triple shift");/* problem test case */
+        testTree(triplShft, "2 3 4 7 9 11 15 20 21 26 30", "3a) Triple shift");
 
         /**/Node mult1 = insert(null, 3);
         insert(mult1, 2);
@@ -119,8 +87,8 @@ public class BalancedTrees {
         insert(mult1, 5);
         insert(mult1, 6);
         insert(mult1, 6);
-        setBalanceFactors(triplShftb);
-        testTree(mult1, "2 3 4 5 6 6", "Fails multiple entries case 1");
+        setBalanceFactors(mult1);
+        testTree(mult1, "2 3 4 5 6 6", "Multiple entries case 1");
 
         mult1 = insert(null, 3);
         insert(mult1, 2);
@@ -128,8 +96,8 @@ public class BalancedTrees {
         insert(mult1, 5);
         insert(mult1, 6);
         insert(mult1, 5);
-        setBalanceFactors(triplShftb);
-        testTree(mult1, "2 3 4 5 5 6", "Fails multiple entries case 2");
+        setBalanceFactors(mult1);
+        testTree(mult1, "2 3 4 5 5 6", "Multiple entries case 2");
 
         mult1 = insert(null, 3);
         insert(mult1, 2);
@@ -137,25 +105,8 @@ public class BalancedTrees {
         insert(mult1, 5);
         insert(mult1, 6);
         insert(mult1, 2);
-        setBalanceFactors(triplShftb);
-        testTree(mult1, "2 2 3 4 5 6", "Fails multiple entries case 3");
-
-        /* test case - 3a) triple shift LRRR & LLL */
-        triplShft = insert(null, 20);
-        insert(triplShft, 4);
-        insert(triplShft, 26);
-        insert(triplShft, 3);
-        insert(triplShft, 9);
-        insert(triplShft, 21);
-        insert(triplShft, 30);
-        insert(triplShft, 2);
-        insert(triplShft, 7);
-        insert(triplShft, 11);
-        insert(triplShft, 15);
-        insert(triplShft, 8);
-        insert(triplShft, 4);
-        setBalanceFactors(triplShft);
-        testTree(triplShft, "2 3 4 4 7 8 9 11 15 20 21 26 30", "Fails triple shift multiple values");
+        setBalanceFactors(mult1);
+        testTree(mult1, "2 2 3 4 5 6", "Multiple entries case 3");
 
         /* test mega upload many repeats */
         n = insert(null, 1);
@@ -180,7 +131,7 @@ public class BalancedTrees {
         insert(n, 13);
         insert(n, 8);
         setBalanceFactors(n);
-        testTree(n, "1 1 2 2 5 6 7 7 8 8 9 9 10 11 13 13 14 15 16 19", "Fails triple shift multiple values");
+        testTree(n, "1 1 2 2 5 6 7 7 8 8 9 9 10 11 13 13 14 15 16 19", "Large 20 node Tree with Duplicates");
 
         /*insert(n, 20);
         insert(n, 2);
@@ -239,11 +190,13 @@ public class BalancedTrees {
             setBalanceFactors(n.right);
     }
 
-    void testTree(Node node, String inorderResult, String exceptionMsg)
+    void testTree(Node node, String inorderResult, String testName)
     {
         StringBuilder sb = new StringBuilder();
         Inorder(node, sb);
-        if(!sb.toString().trim().equals(inorderResult)) { throw new IllegalArgumentException(exceptionMsg); }
+        if(!sb.toString().trim().equals(inorderResult)) { throw new IllegalArgumentException(testName + " - fail test case"); }
+        else
+            System.out.println(testName + " - pass test case");
     }
 
 

@@ -24,8 +24,37 @@ import java.util.Stack;
 
 
 public class Trees {
+    String toString(Node n)
+    {
+        return toString(n, new StringBuilder());
+    }
+    String toString(Node root, StringBuilder sb) {
+        sb.append(root.data + " ");
+
+        if(root.left != null)
+            toString(root.left, sb);
+        if(root.right != null)
+            toString(root.right, sb);
+
+        return sb.toString().trim();
+    }
+    void testCase(Node n, String intendedValue, String testName)
+    {
+        if(!toString(n).equals(intendedValue))
+            throw new IllegalArgumentException(testName + " error");
+        else
+            System.out.println(testName + " pass test case");
+    }
+    void testCase(String input, String intendedValue, String testName)
+    {
+        if(!input.equals(intendedValue))
+            throw new IllegalArgumentException(testName + " error");
+        else
+            System.out.println(testName + " pass test case");
+    }
+
     /*https://www.hackerrank.com/challenges/swap-nodes-algo
-     * forced to run from main so a refernce to Main was added to reference the inner class node
+     * forced to run from main so a reference to Main was added to reference the inner class node
      * Main sln = new Main();
      * new Node() below would need to be replaced with sln.new Node(); in hacker rank solution
      * Node class was added as a private inner class
@@ -125,7 +154,12 @@ public class Trees {
     }
 
     /*https://www.hackerrank.com/challenges/binary-search-tree-lowest-common-ancestor */
-    public Node lca(Node root,int v1,int v2)
+    public void RunLCA(){
+        Node root = lca(getTreeLCA(),1,7);
+
+        testCase(root, "4 2 1 3 7 6", "Lowest Common Ancestor");
+    }
+    Node lca(Node root,int v1,int v2)
     {
         if(root == null)
             return new Node();
@@ -183,7 +217,12 @@ public class Trees {
 
 
     /*https://www.hackerrank.com/challenges/binary-search-tree-insertion */
-    public Node Insert(Node root,int value)
+    public void RunInsert(){
+        Node root = Insert(getTreeBinarySearch(),6);
+
+        testCase(root, "4 2 1 3 7 6", "Binary Tree Insert");
+    }
+    Node Insert(Node root,int value)
     {
         if(root == null)
         {
@@ -219,8 +258,12 @@ public class Trees {
 
     /*https://www.hackerrank.com/challenges/tree-level-order-traversal
     * BFS concept  */
-    public void LevelOrder(Node root)
+    public void RunLevelOrder(){
+        testCase(LevelOrder(getTree()), "3 5 2 1 4 6", "Level Order Traversal");
+    }
+    String LevelOrder(Node root)
     {
+        StringBuilder sb = new StringBuilder();
         java.util.Queue<Node> nodeQ = new java.util.LinkedList<Node>();
         nodeQ.add(root);
         Node n;
@@ -229,42 +272,55 @@ public class Trees {
         while(!nodeQ.isEmpty())
         {
             n = nodeQ.remove();
-            System.out.print(n.data + " ");
+            sb.append(n.data + " ");
             if(n.left != null)
                 nodeQ.add(n.left);
             if(n.right != null)
                 nodeQ.add(n.right);
         }
+
+        return sb.toString().trim();
     }
 
 
     /* https://www.hackerrank.com/challenges/tree-top-view */
-    public void top_view(Node root)
+    public void RunTopView(){
+        testCase(top_view(getTreeTopView()), "1 5 3 2 7", "Top View Traversal");
+    }
+    String top_view(Node root)
     {
+        StringBuilder sb = new StringBuilder();
         if(root.left != null)
-            left_view(root.left);
+            left_view(root.left, sb);
 
-        System.out.print(root.data + " ");
+        sb.append(root.data + " ");
 
         if(root.right != null)
-            right_view(root.right);
+            right_view(root.right, sb);
+
+        return sb.toString().trim();
     }
-    void left_view(Node root)
+    String left_view(Node root, StringBuilder sb)
     {
         if(root.left != null)
-            left_view(root.left);
+            left_view(root.left, sb);
 
-        System.out.print(root.data + " ");
+        sb.append(root.data + " ");
+
+        return sb.toString();
     }
-    void right_view(Node root)
+    String right_view(Node root, StringBuilder sb)
     {
-        System.out.print(root.data + " ");
+        sb.append(root.data + " ");
         if(root.right != null)
-            right_view(root.right);
+            right_view(root.right, sb);
+
+        return  sb.toString();
     }
 
 
     /* https://www.hackerrank.com/challenges/tree-height-of-a-binary-tree */
+    public void RunHeight(){ testCase(String.valueOf(height(getTreeHeight())), "4", "Height"); }
     public int height(Node root)
     {
         if(root.left == null && root.right == null)
@@ -281,40 +337,56 @@ public class Trees {
 
 
     /* https://www.hackerrank.com/challenges/tree-inorder-traversal */
-    public void Inorder(Node root) {
+    public void RunInorder(){ testCase(InorderTraversal(getTree(), new StringBuilder()).trim(), "1 5 4 3 6 2", "Inorder Traversal"); }
+    void Inorder(Node root) {
+        System.out.print(InorderTraversal(root, new StringBuilder()));
+    }
+    String InorderTraversal(Node root, StringBuilder sb) {
         if(root.left != null) {
-            Inorder(root.left);
-            System.out.print(root.data + " ");
+            InorderTraversal(root.left, sb);
+            sb.append(root.data + " ");
         }
         else
-            System.out.print(root.data + " ");
+            sb.append(root.data + " ");
 
         if(root.right != null)
-            Inorder(root.right);
+            InorderTraversal(root.right, sb);
+
+        return sb.toString();
     }
 
 
     /* https://www.hackerrank.com/challenges/tree-postorder-traversal  */
-    public void Postorder(Node root) {
-        if(root.left != null)
-            Postorder(root.left);
-        if(root.right != null)
-            Postorder(root.right);
-
-        System.out.print(root.data + " ");
+    public void RunPostorder(){ testCase(PostorderTraversal(getTree(), new StringBuilder()).trim(), "1 4 5 6 2 3", "Inorder Traversal"); }
+    void Postorder(Node root) {
+        System.out.print(PostorderTraversal(root, new StringBuilder()));
     }
+    String PostorderTraversal(Node root, StringBuilder sb) {
+        if(root.left != null)
+            PostorderTraversal(root.left, sb);
+        if(root.right != null)
+            PostorderTraversal(root.right, sb);
 
+        sb.append(root.data + " ");
+
+        return sb.toString();
+    }
 
     /* https://www.hackerrank.com/challenges/tree-preorder-traversal */
-    public void Preorder(Node root) {
-        System.out.print(root.data + " ");
+    public void RunPreorder(){ testCase(PreorderTraversal(getTree(), new StringBuilder()).trim(), "3 5 1 4 2 6", "Inorder Traversal"); }
+    void Preorder(Node root) {
+        System.out.print(PreorderTraversal(root, new StringBuilder()));
+    }
+    String PreorderTraversal(Node root, StringBuilder sb) {
+        sb.append(root.data + " ");;
 
         if(root.left != null)
-            Preorder(root.left);
+            PreorderTraversal(root.left, sb);
         if(root.right != null)
-            Preorder(root.right);
-    }
+            PreorderTraversal(root.right, sb);
 
+        return sb.toString();
+    }
 
 
     //tree factory type methods
